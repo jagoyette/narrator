@@ -28,7 +28,7 @@ while True:
         pil_img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
         # Resize the image
-        max_size = 250
+        max_size = 512
         ratio = max_size / max(pil_img.size)
         new_size = tuple([int(x*ratio) for x in pil_img.size])
         resized_img = pil_img.resize(new_size, Image.LANCZOS)
