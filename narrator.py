@@ -54,7 +54,10 @@ def generate_new_line(base64_image):
                 {"type": "text", "text": "Describe this image"},
                 {
                     "type": "image_url",
-                    "image_url": f"data:image/jpeg;base64,{base64_image}",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{base64_image}",
+                        "detail": "low"
+                    }
                 },
             ],
         },
@@ -85,6 +88,12 @@ def main():
     script = []
 
     while True:
+        # Tell user David is about to snap a picture
+        print("👀 David is watching...")
+        
+        # give time for user to stabilize image
+        time.sleep(5)
+
         # path to your image
         image_path = os.path.join(os.getcwd(), "./frames/frame.jpg")
 
@@ -92,7 +101,6 @@ def main():
         base64_image = encode_image(image_path)
 
         # analyze posture
-        print("👀 David is watching...")
         analysis = analyze_image(base64_image, script=script)
 
         print("🎙️ David says:")
@@ -101,9 +109,6 @@ def main():
         play_audio(analysis)
 
         script = script + [{"role": "assistant", "content": analysis}]
-
-        # wait for 5 seconds
-        time.sleep(5)
 
 
 if __name__ == "__main__":
